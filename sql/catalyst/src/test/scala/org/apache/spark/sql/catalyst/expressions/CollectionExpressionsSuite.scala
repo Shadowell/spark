@@ -1763,6 +1763,7 @@ class CollectionExpressionsSuite extends SparkFunSuite with ExpressionEvalHelper
     checkEvaluation(ArrayRemove(a4, Literal("a")), null)
 
     checkEvaluation(ArrayRemove(a5, Literal(9)), Seq(1, null, 8, null))
+    checkEvaluation(ArrayRemove(a5, Literal(null, IntegerType)), Seq(1, 8, 9))
     checkEvaluation(ArrayRemove(a6, Literal(false)), Seq(true, true))
 
     // complex data types

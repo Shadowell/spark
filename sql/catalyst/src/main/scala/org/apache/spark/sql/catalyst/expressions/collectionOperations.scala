@@ -3278,10 +3278,17 @@ case class ArrayRemove(left: Expression, right: Expression)
     val newArray = new Array[Any](arr.asInstanceOf[ArrayData].numElements())
     var pos = 0
     arr.asInstanceOf[ArrayData].foreach(right.dataType, (i, v) =>
-      if (v == null || !ordering.equiv(v, value)) {
-        newArray(pos) = v
-        pos += 1
-      }
+      if (value == null) {
+        if (v != null) {
+          newArray(pos) = v
+          pos += 1
+        }
+      } else {
+          if (v == null || !ordering.equiv(v, value)) {
+            newArray(pos) = v
+            pos += 1
+          }
+        }
     )
     new GenericArrayData(newArray.slice(0, pos))
   }
